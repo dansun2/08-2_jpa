@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" version="2.2">
+    <persistence-unit name="jpatest">
+        <class>com.ohgiraffers.section02.crud.Menu</class> <!-- Menu 라는 클래스를 엔티티로 관리하겠다. -->
+        <class>com.ohgiraffers.section03.persistencecontext.Menu</class>
+        <properties>
+            <!-- DB 와의 Connection을 위한 정보를 제공함-->
+            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/> <!--name을 value로 바꿔줘-->
+            <property name="jakarta.persistence.jdbc.user" value="gangnam"/> <!-- user는 데이터베이스 접속을 위한 아이디랑 같다 -->
+            <property name="jakarta.persistence.jdbc.password" value="gangnam"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/gangnam"/>
+
+            <!--JPA 설정을 위한 정보-->
+            <property name="hibernate.show_sql" value="true"/> <!--sql의 쿼리를 엔티티를 기준으로 대신 작성해줌(메서드도 제공해줌)-->
+            <property name="hibernate.format_sql" value="true"/> <!--쿼리는 일자로 만들어주기 때문에 이걸 쓰면 보기 편하게 만들어줌-->
+        </properties>
+    </persistence-unit>    
+</persistence>
