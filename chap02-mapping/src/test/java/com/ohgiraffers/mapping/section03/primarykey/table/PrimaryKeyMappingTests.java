@@ -1,4 +1,4 @@
-package com.ohgiraffers.mapping.section02.column;
+package com.ohgiraffers.mapping.section03.primarykey.table;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -8,7 +8,7 @@ import org.junit.jupiter.api.*;
 
 import java.util.Date;
 
-public class ColumnMappingTests {
+public class PrimaryKeyMappingTests {
 
     private static EntityManagerFactory entityManagerFactory;
 
@@ -33,6 +33,24 @@ public class ColumnMappingTests {
     public static void closeFactory(){
         entityManagerFactory.close();
     }
+
+
+    /* Primary key에는 @Id 어노테이션과 @GeneratedValue 어노테이션을 사용한다.
+       @Id 어노테이션은 엔티티 클래스에서 primary key 역할을 하는 필드를 지정할 때 사용된다.
+       @GeneratedValue 어노테이션을 함께 사용하면 primary key 값을 자동으로 생성할 수 있다.
+
+      데이터베이스마다 기본 키를 생성하는 방식이 서로 다르다.
+      @GeneratedValue 어노테이션은 다음과 같은 속성을 가지고 있다.
+
+   - strategy : 자동 생성 전략을 지정
+       - GenerationType.IDENTITY : 기본 키 생성을 데이터베이스에 위임(MySQL의 AUTO_INCREMENT)
+       - GenerationType.SEQUENCE : 데이터베이스 시퀀스 객체 사용(ORACLE의 SEQUENCE)
+       - GenerationType.TABLE : 키 생성 테이블 사용 -> DB에 종속적이지 않지만 불필요한게 많아서 잘 안 씀.
+       - GenerationType.AUTO : 자동 선택 (MySQL이라면 IDENTITY, ORACLE이라면 SEQUENCE로 선택)
+   - generator : strategy 값을 GenerationType.TABLE로 지정한 경우 사용되는 테이블 이름을 지정
+   - initialValue : strategy 값을 GenerationType.SEQUENCE로 지정한 경우 시퀀스 초기값을 지정
+   - allocationSize : strategy 값을 GenerationType.SEQUENCE로 지정한 경우 시퀀스 증가치를 지정
+    * */
 
     @Test
     public void 컬럼에서_사용하는_속성_테스트(){

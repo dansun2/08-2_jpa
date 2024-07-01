@@ -1,15 +1,16 @@
-package com.ohgiraffers.mapping.section02.column;
+package com.ohgiraffers.mapping.section03.primarykey.identity;
 
 import jakarta.persistence.*;
 
 import java.util.Date;
 
-@Entity(name = "member_section02")
-@Table(name = "tbl_member_section02") // 어떤 테이블과 매핑할건지
+@Entity(name = "member_section03")
+@Table(name = "tbl_member_section03") // 어떤 테이블과 매핑할건지
 public class Member {
 
     @Id // 이걸 안쓰면 PK값이 없어서 에러남
     @Column(name = "member_no")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int memberNo;
 
     @Column(name = "member_id")
