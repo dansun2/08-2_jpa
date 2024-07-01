@@ -6,6 +6,9 @@
         <class>com.ohgiraffers.mapping.section02.column.Member</class>
         <class>com.ohgiraffers.mapping.section03.primarykey.identity.Member</class>
         <class>com.ohgiraffers.mapping.section03.primarykey.table.Member</class>
+        <class>com.ohgiraffers.mapping.section04.enumtype.Member</class>
+        <class>com.ohgiraffers.mapping.section05.access.Member</class>
+        <class>com.ohgiraffers.mapping.section05.property.Member</class>
         <properties>
             <!--데이터베이스 연결을 위한 환경정보-->
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
@@ -16,7 +19,7 @@
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
             <!--데이터의 구조를 바꾸는게 ddl. create라고 라고 하면 데이터를 만들겠다-->
-            <property name="hibernate.hbm2ddl.auto" value="none"/>
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
         </properties>
     </persistence-unit>
 </persistence>
