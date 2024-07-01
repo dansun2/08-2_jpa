@@ -17,9 +17,9 @@ class ProblemsOfUsingDirectSqlTests {
         String user = "gangnam";
         String password = "gangnam";
 
-        Class.forName(driver);
-        con = DriverManager.getConnection(url, user, password);
-        con.setAutoCommit(false);
+        Class.forName(driver); // 클래스가 없으면 not found exception, DB연결이 안됐으면 sql exception바생 그래서 어떤오류인지 명확ㅎ 하기ㅇ위해 씀
+        con = DriverManager.getConnection(url, user, password); // drivermanager는 jdbc에서 제공하는 인터페이스
+        con.setAutoCommit(false); // 자동으로 커밋안되게 false로 둠
     }
 
     @AfterEach
@@ -44,12 +44,13 @@ class ProblemsOfUsingDirectSqlTests {
         String query = "SELECT MENU_CODE, MENU_NAME, MENU_PRICE, CATEGORY_CODE, ORDERABLE_STATUS FROM TBL_MENU";
 
         // when
-        Statement stmt = con.createStatement();
-        ResultSet rset = stmt.executeQuery(query);
+        Statement stmt = con.createStatement(); // sql에 쿼리객체를 만들겠다해서 매개변수로 쿼리를 받음
+        ResultSet rset = stmt.executeQuery(query); //select로 쿼리를 조회할 때 excuteQuery
+
 
 
         List<Menu> menuList = new ArrayList<>();
-        while (rset.next()){
+        while (rset.next()){ // 다음 값이 존재하면 조회
             Menu menu = new Menu();
             menu.setMenuCode(rset.getInt("MENU_CODE"));
             menu.setMenuName(rset.getString("MENU_NAME"));
@@ -61,10 +62,10 @@ class ProblemsOfUsingDirectSqlTests {
 
         //then
         Assertions.assertNotNull(menuList);
-        menuList.forEach(System.out::println);
+        menuList.forEach(System.out::println); // 람다표현식
         rset.close();
         stmt.close();
-    }
+    } // jdbc의 api를 이용해서 메뉴 테이블을 조회함
 
 
     @DisplayName("직접 SQL을 작성하여 신규 메뉴를 추가할 때 발생하는 문제 확인")
@@ -79,16 +80,16 @@ class ProblemsOfUsingDirectSqlTests {
         String query = "INSERT INTO TBL_MENU(MENU_NAME, MENU_PRICE, CATEGORY_CODE, ORDERABLE_STATUS) VALUES(?, ?, ?, ?)";
 
 
-        PreparedStatement pstmt = con.prepareStatement(query);
+        PreparedStatement pstmt = con.prepareStatement(query); //내가 제공한 쿼리에다가 매개변수(밸류)를 전달해줌
         pstmt.setString(1, menu.getMenuName());
         pstmt.setInt(2, menu.getMenuPrice());
         pstmt.setInt(3, menu.getCategoryCode());
         pstmt.setString(4, menu.getOrderableStatus());
 
-        int result = pstmt.executeUpdate();
-        Assertions.assertEquals(1, result);
+        int result = pstmt.executeUpdate(); // 쿼리를 업데이트(인서트)해준다 excuteUpdate는 데이터가 잘 들어갔으면 1 안들어갔으면 0
+        Assertions.assertEquals(1, result); // junit에서 검증방식을 제공하기 위한 클래스. 같으면 데이터가 잘들어갔냐
         pstmt.close();
-    }
+    } // jdbc api를 이용하여 메뉴테이블에 데이터를 insert해줌
 
     /* 2. SQL에 의존하여 개발 */
     /* 요구사항의 변경에 따라 애플리케이션의 수정이 SQL의 수정으로도 이어진다.
@@ -133,12 +134,14 @@ class ProblemsOfUsingDirectSqlTests {
         Statement stmt = con.createStatement();
         ResultSet rset = stmt.executeQuery(query);
 
+
         List<MenuAndCategory> menuAndCategories = new ArrayList<>();
         while(rset.next()) {
             MenuAndCategory menuAndCategory = new MenuAndCategory();
             menuAndCategory.setMenuCode(rset.getInt("MENU_CODE"));
             menuAndCategory.setMenuName(rset.getString("MENU_NAME"));
             menuAndCategory.setMenuPrice(rset.getInt("MENU_PRICE"));
+            menuAndCategory.setCategory(new Category());
             menuAndCategory.setCategory(new Category(rset.getInt("CATEGORY_CODE"), rset.getString("CATEGORY_NAME")));
             menuAndCategory.setOrderableStatus(rset.getString("ORDERABLE_STATUS"));
 
@@ -245,7 +248,7 @@ class ProblemsOfUsingDirectSqlTests {
         stmt2.close();
 
         //then
-        Assertions.assertEquals(menu1, menu2);
+        Assertions.assertEquals(menu1, menu2); // 객체간의 비교는 무조건 주소값의 비교이다(데이터값 비교가 아님)
         //Assertions.assertFalse(menu1 == menu2);
     }
 

@@ -19,7 +19,7 @@ public class Menu {
 
     @Column(name = "category_code")
     private int categoryCode;
-
+0
     @Column(name = "orderable_status")
     private String orderableStatus;
 

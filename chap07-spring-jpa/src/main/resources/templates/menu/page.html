@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>menu</h1>
+    <div>
+        <ul>
+            <th:block th:each="menu : ${menus}">
+                <li th:text="${menu}"></li>
+            </th:block>
+        </ul>
+    </div>
+    <a href="menu/post">등록하기</a>
+</body>
+</html>

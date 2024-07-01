@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>메뉴 등록하기</h1>
+    <form th:action="post" method="post">
+        <label for="menuName">메뉴 이름</label> <input type="text" id="menuName" name="menuName" />
+        <label for="menuPrice">메뉴 가격</label> <input type="text" id="menuPrice" name="menuPrice" />
+        <label for="categoryCode">메뉴 카테고리 코드</label>
+        <select id="categoryCode" name="categoryCode">
+            <th:block th:each=" category: ${categorys}">
+                <option th:value="${category.categoryCode}" th:text="${category.categoryName}"></option>
+            </th:block>
+        </select>
+        <label>판매 상태</label> <input type="text" name="orderableStatus" />
+        <input type="submit" value="등록하기"/>
+    </form>
+</body>
+</html>
