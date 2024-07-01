@@ -4,6 +4,8 @@
         <!--Member라는 클래스를 entity로 취급해라.-->
         <class>com.ohgiraffers.mapping.section01.entity.Member</class>
         <class>com.ohgiraffers.mapping.section02.column.Member</class>
+        <class>com.ohgiraffers.mapping.section03.primarykey.identity.Member</class>
+        <class>com.ohgiraffers.mapping.section03.primarykey.table.Member</class>
         <properties>
             <!--데이터베이스 연결을 위한 환경정보-->
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>

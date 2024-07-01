@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Entity(name = "member_section03_table")
 @Table(name = "tbl_member_section03_table") // 어떤 테이블과 매핑할건지
-@TableGenerator(
+@TableGenerator( // 테이블 생성 전략
         name = "member_seq_table_generator", // 엔티티 이름
         table = "tbl_my_sequences", //테이블 이름
         pkColumnValue = "my_seq_member_no"

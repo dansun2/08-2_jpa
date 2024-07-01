@@ -8,7 +8,7 @@ import org.junit.jupiter.api.*;
 
 import java.util.Date;
 
-public class PrimaryKeyMappingTests {
+public class SequenceTests {
 
     private static EntityManagerFactory entityManagerFactory;
 
@@ -56,13 +56,12 @@ public class PrimaryKeyMappingTests {
     public void 컬럼에서_사용하는_속성_테스트(){
         // given
         Member member = new Member();
-        member.setMemberNo(2);
         member.setMemberId("테스트 길동");
         member.setMemberPwd("pass01");
         member.setNickName("user01");
         member.setAddress("강남구1");
         member.setEnrollDate(new Date());
-//        member.setPhone("001");
+        member.setPhone("");
         member.setMemberRole("게스트");
         member.setStatus("y");
 
