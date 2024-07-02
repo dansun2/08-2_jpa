@@ -9,6 +9,8 @@
         <class>com.ohgiraffers.mapping.section04.enumtype.Member</class>
         <class>com.ohgiraffers.mapping.section05.access.Member</class>
         <class>com.ohgiraffers.mapping.section05.property.Member</class>
+        <class>com.ohgiraffers.mapping.section06.compositekey.Member</class>
+
         <properties>
             <!--데이터베이스 연결을 위한 환경정보-->
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
