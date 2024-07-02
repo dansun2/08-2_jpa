@@ -6,13 +6,11 @@ import jakarta.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Embeddable // jpa에서 복합키(n개 이상의 키) 설정 할 때 Serializable을 상속받아야함(직렬화)
 public class MemberPK implements Serializable { // Serializable 네트워크로 패키지 전송할 때 쓰이는건데 jpa에서는 복합키클래스 직렬화에 쓰임
 
-    @Column(name = "member_no")
+
     private int memberNo;
 
-    @Column(name = "member_id")
     private String memberId;
 
     public MemberPK() {
