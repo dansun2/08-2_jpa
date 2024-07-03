@@ -66,4 +66,6 @@ public class CategoryAndMenuTests {
         CategoryAndMenu foundCategoryAndMenu = entityManager.find(CategoryAndMenu.class, 888);
         System.out.println(foundCategoryAndMenu);
     }
+
+    @Test
 }

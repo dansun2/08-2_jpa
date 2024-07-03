@@ -1,6 +1,5 @@
 package com.ohgiraffers.section03.bidirection;
 
-import com.ohgiraffers.section02.onetomany.Menu;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -21,7 +20,15 @@ public class Category {
     @Column(name = "ref_category_code")
     private Integer refCategoryCode;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category") // mappedBy는 주인이 누군지 설정해주는건데 주인이 아닌쪽에 설정해줘야함
     private List<Menu> menuList;
 
+    @Override
+    public String toString() {
+        return "Category{" +
+                "categoryCode=" + categoryCode +
+                ", categoryName='" + categoryName + '\'' +
+                ", refCategoryCode=" + refCategoryCode +
+                '}';
+    }
 }

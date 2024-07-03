@@ -1,9 +1,6 @@
 package com.ohgiraffers.section03.bidirection;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import org.junit.jupiter.api.*;
 
 public class BiDirectionTests {
@@ -46,5 +43,24 @@ public class BiDirectionTests {
         System.out.println(foundMenu);
         System.out.println(foundCategory);
         foundCategory.getMenuList().forEach(System.out::println);
+    }
+
+    @Test
+    void 양방향_연관관계_주인_객체를_이용한_삽입_테스트(){
+        Menu menu = new Menu();
+        menu.setMenuName("연관관계 주인");
+        menu.setMenuPrice(1000);
+        menu.setOrderableStatus("Y");
+
+        menu.setCategory(entityManager.find(Category.class, 4));
+
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.persist(menu);
+        transaction.commit();
+
+        Menu foundMenu = entityManager.find(Menu.class, menu.getMenuCode());
+        Assertions.assertEquals(menu.getMenuCode(), foundMenu.getMenuCode());
+        System.out.println(foundMenu);
     }
 }

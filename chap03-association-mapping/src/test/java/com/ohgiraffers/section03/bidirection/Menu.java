@@ -1,6 +1,5 @@
 package com.ohgiraffers.section03.bidirection;
 
-import com.ohgiraffers.section01.manytoone.Category;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -25,4 +24,15 @@ public class Menu {
 
     @Column(name = "orderable_status")
     private String orderableStatus;
+
+    @Override
+    public String toString() {
+        return "Menu{" +
+                "menuCode=" + menuCode +
+                ", menuName='" + menuName + '\'' +
+                ", menuPrice=" + menuPrice +
+                ", category=" + category +
+                ", orderableStatus='" + orderableStatus + '\'' +
+                '}';
+    }
 }
