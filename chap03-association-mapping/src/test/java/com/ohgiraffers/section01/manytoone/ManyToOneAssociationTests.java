@@ -1,10 +1,8 @@
 package com.ohgiraffers.section01.manytoone;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import org.junit.jupiter.api.*;
+
 
 public class ManyToOneAssociationTests {
 
@@ -62,9 +60,55 @@ public class ManyToOneAssociationTests {
         int menuCode = 10;
 
         MenuAndCategory menuAndCategory = entityManager.find(MenuAndCategory.class, menuCode);
-        Category menuCategory = menuAndCategory.getCategory();
+//        Category menuCategory = menuAndCategory.getCategory()
+//        Assertions.assertNotNull(menuCategory);
+//        System.out.println("menuCategory = " + menuCategory);
+        System.out.println(menuAndCategory.getCategory());
+        Category category = menuAndCategory.getCategory();
+        System.out.println(category);
+    }
 
-        Assertions.assertNotNull(menuCategory);
-        System.out.println("menuCategory = " + menuCategory);
+    @Test
+    public void 다대일_연관관계_객체지향_쿼리를_사용한_카테고리_이름_조회_테스트(){ // 이 밑에 애들은 영속성 컨텍스트에서 관리됨
+        // from의 테이블명은 엔티티명이 되어야 한다.
+        String jpql = "SELECT c.categoryName from menu_and_category m join m.category c where m.menuCode=15";
+
+        String category = entityManager.createQuery(jpql, String.class).getSingleResult();
+
+        Assertions.assertNotNull(category);
+        System.out.println("category = " + category);
+    }
+
+    /*
+    * commit()을 할 경우 컨텍스트 내에 저장된 영속성 객체를 insert 하는 쿼리가 동작된다.
+    * 단, 카테고리가 존재하는 값이 아니므로 부모 테이블(tbl_category)에 값이 먼저 들어있어야 그 카테고리를 참조해서
+    * 자식 테이블(tbl_menu)에 데이터를 넣을 수 있다.
+    * 영속성 전이란 특정 엔티티를 영속화할 때 연관된 엔티티도 함께 영속화 한다는 의미이다.
+    * cascade=CascadeType.PERSIST를 설정하면 MenuAndCategory 엔티티를 영속화 할 때 category 엔티티도 함께 영속화한다.
+    * */
+    @Test
+    void 다대일_연관관계_객체_삽입_테스트(){ // 영속성 전이
+        MenuAndCategory menuAndCategory = new MenuAndCategory();
+        menuAndCategory.setMenuCode(999);
+        menuAndCategory.setMenuName("멸치빙수");
+        menuAndCategory.setMenuPrice(199999);
+
+        Category category = new Category();
+        category.setCategoryCode(10000);
+        category.setCategoryName("신카");
+        category.setRefCategoryCode(null);
+
+        menuAndCategory.setCategory(category);
+        menuAndCategory.setOrderableStatus("Y");
+
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        entityManager.persist(menuAndCategory);
+        transaction.commit();
+
+        MenuAndCategory foundMenuAndCategory = entityManager.find(MenuAndCategory.class,999);
+        Assertions.assertEquals(menuAndCategory.getMenuCode(), foundMenuAndCategory.getMenuCode());
+        Assertions.assertEquals(menuAndCategory.getCategory().getCategoryCode(), foundMenuAndCategory.getCategory().getCategoryCode());
     }
 }
