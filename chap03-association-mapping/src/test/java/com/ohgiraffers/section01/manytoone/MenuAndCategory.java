@@ -40,7 +40,7 @@ public class MenuAndCategory {
 
     @JoinColumn(name = "category_code")
 
-    // cascade는 영속성을 함께하겠다는 뜻
+    // cascade.persist는 영속성을 함께하겠다는 뜻
     // 내가 쓰는쪽이 Many(메뉴테이블 여러곳에서 카테고리를 참조하고 있음)
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Category category;
