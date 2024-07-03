@@ -1,6 +1,5 @@
 package com.ohgiraffers.section02.onetomany;
 
-import com.ohgiraffers.section03.bidirection.Category;
 import jakarta.persistence.*;
 import org.junit.jupiter.api.*;
 
