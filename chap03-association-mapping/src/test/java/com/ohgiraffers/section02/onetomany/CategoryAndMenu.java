@@ -21,6 +21,6 @@ public class CategoryAndMenu {
     private Integer refCategoryCode;
 
     @JoinColumn(name = "category_code")
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private List<Menu> menuList;
 }
