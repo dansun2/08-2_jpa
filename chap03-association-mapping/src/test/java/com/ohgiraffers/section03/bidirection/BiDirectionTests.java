@@ -3,10 +3,8 @@ package com.ohgiraffers.section03.bidirection;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
+import jakarta.persistence.Table;
+import org.junit.jupiter.api.*;
 
 public class BiDirectionTests {
 
@@ -32,5 +30,21 @@ public class BiDirectionTests {
     @AfterAll
     public static void closeFactory(){
         entityManagerFactory.close();
+    }
+
+    @Test
+    public void 양방향_연관관계_매핑_조회_테스트(){
+        int menuCode = 10;
+        int categoryCode = 10;
+
+        Menu foundMenu = entityManager.find(Menu.class, menuCode);
+        Category foundCategory = entityManager.find(Category.class, categoryCode);
+
+        Assertions.assertEquals(menuCode, foundMenu.getMenuCode());
+        Assertions.assertEquals(categoryCode, categoryCode);
+
+        System.out.println(foundMenu);
+        System.out.println(foundCategory);
+        foundCategory.getMenuList().forEach(System.out::println);
     }
 }
