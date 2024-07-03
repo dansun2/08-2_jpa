@@ -3,6 +3,9 @@ package com.ohgiraffers.section03.bidirection;
 import jakarta.persistence.*;
 import org.junit.jupiter.api.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BiDirectionTests {
 
     private static EntityManagerFactory entityManagerFactory;
@@ -63,4 +66,33 @@ public class BiDirectionTests {
         Assertions.assertEquals(menu.getMenuCode(), foundMenu.getMenuCode());
         System.out.println(foundMenu);
     }
+
+    @Test
+    public void 양방향_연관관계_주인이_아닌_객체를_이용한_삽입테스트(){
+        Category category = new Category();
+        category.setCategoryName("양방향 카테고리");
+        category.setRefCategoryCode(null);
+
+        Menu insertMenu = new Menu();
+        insertMenu.setMenuName("연관관계 주인");
+        insertMenu.setMenuPrice(1000);
+        insertMenu.setOrderableStatus("Y");
+
+        List<Menu> list = new ArrayList<>();
+        list.add(insertMenu);
+        category.setMenuList(list);
+
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.persist(category);
+        transaction.commit();
+
+        Category foundCategory = entityManager.find(Category.class, category.getCategoryCode());
+        Assertions.assertEquals(category.getCategoryCode(), foundCategory.getCategoryCode());
+        System.out.println(foundCategory);
+
+        Menu foundMenu = entityManager.find(Menu.class, insertMenu.getMenuCode());
+        System.out.println(foundMenu);
+    }
+
 }
